@@ -1,0 +1,72 @@
+baseURL: https://batcain.github.io
+locale: en-us
+title: Forgotten and Rarely Remembered Blog
+theme: ["PaperMod"]
+
+markup:
+  highlight:
+    codeFences: true
+    guessSyntax: false
+    noClasses: false
+    style: monokai
+
+params:
+  env: production
+  title: "Rarely Remembered Blog"
+  description: "Net is vast and infinite"
+  keywords: []
+  author: "batcain"
+  images: ["images/papermod-cover.png"]
+  dateFormat: "2 January 2006"
+  defaultTheme: "dark"
+  disableThemeToggle: false
+
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  ShowSummary: true
+  ShowRssButtonInSectionTermList: false
+  UseHugoToc: true
+  comments: false
+  math: true
+
+  ShowToc: true
+  TocOpen: true
+
+  profileMode:
+    enabled: true
+    title: "Net is vast and infinite."
+    imageUrl: "assets/gis.jpg"
+    imageWidth: 120
+    imageHeight: 120
+    text: ""
+  # Sosyal Medya ve Hesap Linkleri
+  
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/batcain"
+    - name: "twitter"
+      url: "https://twitter.com/batcain_"
+    - name: "virustotal"
+      url: "https://www.virustotal.com/gui/user/batcain"
+
+  # Footer Ayarları
+  label:
+    text: "~/"
+    icon: ""
+    iconHeight: 35
+
+# Üst Menü Yapılandırması (About, Posts, Series vb.)
+menu:
+  main:
+    - identifier: "posts"
+      name: "Posts"
+      url: "/posts/"
+      weight: 10
+    - identifier: "about"
+      name: "About"
+      url: "/about/"
+      weight: 20

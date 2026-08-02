@@ -1,0 +1,26 @@
+.notice.critical {
+  padding: 16px;
+  background-color: rgba(239, 68, 68, 0.12); /* Hafif kırmızı arkaplan */
+  border-left: 4px solid #ef4444;          /* Canlı kırmızı kenar çizgisi */
+  color: inherit;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.notice.warning, .notice.yellow {
+  padding: 16px;
+  background-color: rgba(234, 179, 8, 0.12); /* Hafif sarı arkaplan */
+  border-left: 4px solid #eab308;          /* Canlı sarı kenar çizgisi */
+  color: inherit;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.notice.info, .notice.blue {
+  padding: 16px;
+  background-color: rgba(59, 130, 246, 0.12); /* Hafif mavi arkaplan */
+  border-left: 4px solid #3b82f6;          /* Canlı mavi kenar çizgisi */
+  color: inherit;
+  margin: 20px 0;
+  border-radius: 4px;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Hardware Repair on Forgotten and Rarely Remembered Blog</title>
+    <link>http://localhost:1313/categories/hardware-repair/</link>
+    <description>Recent content in Hardware Repair on Forgotten and Rarely Remembered Blog</description>
+    <image>
+      <title>Forgotten and Rarely Remembered Blog</title>
+      <url>http://localhost:1313/images/papermod-cover.png</url>
+      <link>http://localhost:1313/images/papermod-cover.png</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/hardware-repair/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kobo Sage Teardown &amp; Battery Replacement: Diagnosing UVLO</title>
+      <link>http://localhost:1313/posts/repairing_kobo_sage/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/repairing_kobo_sage/</guid>
+      <description>Technical guide on opening the Kobo Sage, diagnosing PMIC Under-Voltage Lockout (UVLO) via voltage sag, and replacing the soldered Li-ion battery.</description>
+    </item>
+  </channel>
+</rss>

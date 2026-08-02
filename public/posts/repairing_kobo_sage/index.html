@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Kobo Sage Teardown &amp; Battery Replacement: Diagnosing UVLO | Forgotten and Rarely Remembered Blog</title>
+<meta name="keywords" content="Kobo Sage, Li-Po Battery, UVLO, Soldering, Right To Repair, Hardware Teardown">
+<meta name="description" content="Technical guide on opening the Kobo Sage, diagnosing PMIC Under-Voltage Lockout (UVLO) via voltage sag, and replacing the soldered Li-ion battery.">
+<meta name="author" content="batcain">
+<link rel="canonical" href="http://localhost:1313/posts/repairing_kobo_sage/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.0e1ba0092894fd419f185bcc4de4ec77aba192512ba2a81133fa0a7d90906cc9.css" integrity="sha256-DhugCSiU/UGfGFvMTeTsd6uhklEroqgRM/oKfZCQbMk=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/repairing_kobo_sage/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+
+<meta property="og:url" content="http://localhost:1313/posts/repairing_kobo_sage/">
+  <meta property="og:site_name" content="Forgotten and Rarely Remembered Blog">
+  <meta property="og:title" content="Kobo Sage Teardown & Battery Replacement: Diagnosing UVLO">
+  <meta property="og:description" content="Technical guide on opening the Kobo Sage, diagnosing PMIC Under-Voltage Lockout (UVLO) via voltage sag, and replacing the soldered Li-ion battery.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-08-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-08-02T00:00:00+00:00">
+    <meta property="article:tag" content="Kobo Sage">
+    <meta property="article:tag" content="Li-Po Battery">
+    <meta property="article:tag" content="UVLO">
+    <meta property="article:tag" content="Soldering">
+    <meta property="article:tag" content="Right to Repair">
+    <meta property="article:tag" content="Hardware Teardown">
+      <meta property="og:image" content="http://localhost:1313/images/papermod-cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/papermod-cover.png">
+  <meta name="twitter:title" content="Kobo Sage Teardown & Battery Replacement: Diagnosing UVLO">
+  <meta name="twitter:description" content="Technical guide on opening the Kobo Sage, diagnosing PMIC Under-Voltage Lockout (UVLO) via voltage sag, and replacing the soldered Li-ion battery.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Kobo Sage Teardown \u0026 Battery Replacement: Diagnosing UVLO",
+      "item": "http://localhost:1313/posts/repairing_kobo_sage/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kobo Sage Teardown \u0026 Battery Replacement: Diagnosing UVLO",
+  "name": "Kobo Sage Teardown \u0026 Battery Replacement: Diagnosing UVLO",
+  "description": "Technical guide on opening the Kobo Sage, diagnosing PMIC Under-Voltage Lockout (UVLO) via voltage sag, and replacing the soldered Li-ion battery.",
+  "keywords": [
+    "Kobo Sage", "Li-Po Battery", "UVLO", "Soldering", "Right To Repair", "Hardware Teardown"
+  ],
+  "articleBody": " ⚠️ WARNING: If you do not know what you are doing, do not trust yourself to be delicate enough, do not have the proper tools, if the device is too important to you; please do not try this!\nGo see a friendly neighborhood repair shop and seek advice from an actual professional!\nI have owned a Kobo Sage e-book reader since 2024. In June 2026, just days after its warranty expired, it decided to stop working. I was quite upset considering its potential and, obviously, the cost of buying a new one in this economy. It had suffered no fall damage, wasn’t exposed to harsh conditions, excessive heat, moisture, or any liquids whatsoever. I DID NOT EVEN USE IT AS MUCH AS I WANTED TO. What a waste of potential.\nLook, my man here has a zero repairability score on iFixit. What am I supposed to do? Trash it when the lights go out? What do I do with this Stylus 2 Pen that doesn’t work anywhere else, do I stick it in my eye next?\nI looked up forums to see if anyone had managed to repair it. Almost every comment I saw was “Nevermind, buy a new one,” “Getting it fixed costs more than a new one,” or “I will switch to Kindle,” and so on. Well, this damn device is TOO EXPENSIVE in my country. I was either going to fix it for a reasonable price, or trash it, never buy an e-reader again, and go to an eye doctor to treat my eyes melting from reading PDFs on LCD screens. I didn’t want my money to go to waste and regret buying it in the first place, so I forcefully chose the first option.\nThe problem was this: it worked perfectly fine when plugged into a charger or a computer, but it froze and crashed immediately when switched to battery power. To give a little background, I didn’t use or charge it very frequently. Sometimes I would let it sit on the charger for a couple of extra hours (always using quality USB-C cables, I must add).\nThe thing about Li-ion batteries is that they do not like how I treat them. Whether you leave them fully charged or completely drained, they tend to die inside. Since I had only used the device for about 98 hours total over two years, the probability of the Li-ion battery being dead was pretty high.\nYet, there were a few other possibilities to consider:\nThe Li-ion battery was dead. If it managed battery power somewhat okay but crashed only on certain books, corrupted files might be failing to process. The motherboard’s PMIC (Power Management IC) was triggering an Under-Voltage Lockout (UVLO) -\u003e verifying this usually requires a power supply and an oscilloscope. How did I open it You know how everyone gloats about IPX protection and how great it is? In reality, it is just a black, sticky, and stubborn goo. It is in every modern device and I couldn’t hate it more. In the Kobo Sage’s case, it has an IPX8 rating, which means:\n“Represents the device’s waterproofing capabilities. IPX8 signifies the highest level of protection against water, suitable for continuous submersion under conditions specified by the manufacturer.”\nI found that the top left corner (marked below) was the easiest to open when I applied a little force with my fingers (not nails—do not stick your nails between the screen and the cover). If you use a tight case with your e-reader, there is always one corner that takes more pressure than the others when you remove it. Without exaggerating, apply a bit of force to the thin corners and see if they yield a little space.\nI do not recommend starting from the more rounded corners on the button side. Specifically, on the top-right, there is a screen connector and even more sticky adhesive above it. Also, please do not take the chance of sticking anything sharp into the top-right corner; do not risk tearing that screen connector. (Fixing and soldering a torn ribbon cable is extremely difficult and requires too much attention, patience, time, and specialized equipment).\nI did not apply any heat during the opening process. Without prior knowledge of the internal component placement, and considering the back cover plastic appeared highly susceptible to thermal deformation, using a heat gun did not seem like a viable approach. I managed to pry it open without thermal assistance; however, if you are proficient with a heat gun and trust your thermal management after analyzing the internal layout provided later in this documentation, you may proceed with heat application at your own discretion.\nAfter getting a small opening in one corner, you will need a prying tool that is flexible, blunt, and thin. I used a couple of plastic picks. The adhesive goo is not on the vertical sides; it is attached where the back cover meets the internal chassis, parallel to the surface.\nKeeping this in mind, you have to use very gentle prying force and a lot of patience.\nIf you manage to get the back cover off without any serious damage, you will notice the power button has a separate PCB. It connects to the motherboard via a long ribbon cable and is attached to the back cover by two small screws. Removing and reinstalling them can be tricky given the tight space, but it is doable.\nWhat it looks like on the inside At first glance, after all that effort, a couple of things are worth noticing:\nThe battery cables are directly soldered to the motherboard, and the solder points have a small transparent protector over them.\nIt’s no wonder the power button felt weird before; it looks even more ridiculous when you see the actual switch mechanism they opted for.\nThe battery takes up a lot of space, but don’t be fooled by its footprint; it is EXTREMELY THIN. If you want a perfect OEM-style solution, you can try to buy a battery with the exact dimensions (which will be very hard to find, mind you). But if you are just repairing it for functionality, there are other batteries that, while not a perfect fit size-wise, won’t prevent the back cover from closing properly.\nIf you are having issues with the page-turn buttons, you will have to remove the motherboard by taking out six more screws to check behind it.\nHere is a sneak peek of the internals. Take a look at the image below.\nMeasurements I scraped off a little of the protective glue on the battery solder points to get a decent reading and placed my multimeter probes. While the device was frozen or just sitting idle, I measured 4V. However, when I pressed the power button while monitoring the values, the voltage suddenly dropped to 3.4-3.5V. This voltage sag was the reason the PMIC kept locking out my device; it was registering values below the expected operating voltage under load.\nThe Fix Any 3.7V Li-ion battery with 1200mAh (4.44 / 3.7 = 1.2Ah) that is thin enough will get the job done. It doesn’t have to fit perfectly; the back cover is plastic and can flex slightly, so it will close just fine even if the battery isn’t an exact match in size.\nKeep in mind that most aftermarket batteries come with a standard JST connector. The Kobo Sage motherboard does not have a connector socket; the power lines are directly soldered. You cannot just plug it in. You will need to remove this connector and solder the wires yourself.\nCRITICAL WARNING: When removing the JST connector, cut the wires ONE BY ONE. If your wire cutters slice through both the red (VCC) and black (GND) wires simultaneously, you will short the battery and create a fire hazard.\nThe Cost I originally purchased this device two years ago for roughly $246. Today, the current market price for the exact same unit has escalated to an absurd $565. On top of that, accessories like a proper cover and the Stylus 2 add another $109 to your total ecosystem cost.\nI contacted an authorized service center to get a baseline repair quote. They demanded $100 for the fix. This requested amount was more than a third of my initial purchase price for the entire device. Since buying a brand new one (only to not read pdfs I saw here and there) was already out of the question, accepting this service quote was mathematically and logically unacceptable to me.\nUltimately, disregarding the time and effort spent on the hardware, I just sourced a replacement battery for $10 (450 TRY). The absolute financial cost of this entire repair operation was exactly $10.\nOdds were on my side for this one (yay!), hopefully see you on the next repair.\nA final note: if you end up with an irreparable device but the E-INK screen is still healthy, please do not throw it away. E-INK panels are incredibly expensive, especially at these sizes. If you cannot repair what you have, I strongly encourage you to salvage its usable parts properly.\n",
+  "wordCount" : "1514",
+  "inLanguage": "en",
+  "image": "http://localhost:1313/images/papermod-cover.png","datePublished": "2026-08-02T00:00:00Z",
+  "dateModified": "2026-08-02T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "batcain"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/repairing_kobo_sage/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Forgotten and Rarely Remembered Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="~/ (Alt + H)">~/</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Kobo Sage Teardown &amp; Battery Replacement: Diagnosing UVLO
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-08-02 00:00:00 +0000 UTC'>2 August 2026</span>&nbsp;·&nbsp;<span>8 min</span>&nbsp;·&nbsp;<span>1514 words</span>&nbsp;·&nbsp;<span>batcain</span>
+
+</div>
+  </header> <details class="toc"  open>
+    <summary accesskey="c" title="(Alt + C)">
+        <span class="title">Table of Contents</span>
+    </summary>
+
+    <div class="inner"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-did-i-open-it">How did I open it</a></li>
+    <li><a href="#what-it-looks-like-on-the-inside">What it looks like on the inside</a></li>
+    <li><a href="#measurements">Measurements</a></li>
+    <li><a href="#the-fix">The Fix</a></li>
+    <li><a href="#the-cost">The Cost</a></li>
+  </ul>
+</nav>
+    </div>
+</details>
+
+  <div class="post-content md-content"><div class="notice yellow">
+    <p><strong>⚠️ WARNING:</strong> If you do not know what you are doing, do not trust yourself to be delicate enough, do not have the proper tools, if the device is too important to you; please do not try this!</p>
+<p>Go see a friendly neighborhood repair shop and seek advice from an actual professional!</p>
+
+</div>
+<hr>
+<p>I have owned a Kobo Sage e-book reader since 2024. In June 2026, just days after its warranty expired, it decided to stop working. I was quite upset considering its potential and, obviously, the cost of buying a new one in this economy. It had suffered no fall damage, wasn&rsquo;t exposed to harsh conditions, excessive heat, moisture, or any liquids whatsoever. I DID NOT EVEN USE IT AS MUCH AS I WANTED TO. What a waste of potential.</p>
+<p>Look, my man here has a zero repairability score on iFixit. What am I supposed to do? Trash it when the lights go out? What do I do with this Stylus 2 Pen that doesn&rsquo;t work anywhere else, do I stick it in my eye next?</p>
+<p><img alt="Repairability score on iFixit" loading="lazy" src="/posts/repairing_kobo_sage/assets/ifixit_score.png"></p>
+<p>I looked up forums to see if anyone had managed to repair it. Almost every comment I saw was &ldquo;Nevermind, buy a new one,&rdquo; &ldquo;Getting it fixed costs more than a new one,&rdquo; or &ldquo;I will switch to Kindle,&rdquo; and so on. Well, this damn device is TOO EXPENSIVE in my country. I was either going to fix it for a reasonable price, or trash it, never buy an e-reader again, and go to an eye doctor to treat my eyes melting from reading PDFs on LCD screens. I didn&rsquo;t want my money to go to waste and regret buying it in the first place, so I forcefully chose the first option.</p>
+<p>The problem was this: it worked perfectly fine when plugged into a charger or a computer, but it froze and crashed immediately when switched to battery power. To give a little background, I didn&rsquo;t use or charge it very frequently. Sometimes I would let it sit on the charger for a couple of extra hours (always using quality USB-C cables, I must add).</p>
+<p>The thing about Li-ion batteries is that they do not like how I treat them. Whether you leave them fully charged or completely drained, they tend to die inside. Since I had only used the device for about 98 hours total over two years, the probability of the Li-ion battery being dead was pretty high.</p>
+<p>Yet, there were a few other possibilities to consider:</p>
+<ol>
+<li>The Li-ion battery was dead.</li>
+<li>If it managed battery power somewhat okay but crashed only on certain books, corrupted files might be failing to process.</li>
+<li>The motherboard&rsquo;s PMIC (Power Management IC) was triggering an Under-Voltage Lockout (UVLO) -&gt; verifying this usually requires a power supply and an oscilloscope.</li>
+</ol>
+<h2 id="how-did-i-open-it">How did I open it<a hidden class="anchor" aria-hidden="true" href="#how-did-i-open-it">#</a></h2>
+<p>You know how everyone gloats about IPX protection and how great it is? In reality, it is just a black, sticky, and stubborn goo. It is in every modern device and I couldn&rsquo;t hate it more. In the Kobo Sage&rsquo;s case, it has an IPX8 rating, which means:</p>
+<blockquote>
+<p>&ldquo;Represents the device&rsquo;s waterproofing capabilities. IPX8 signifies the highest level of protection against water, suitable for continuous submersion under conditions specified by the manufacturer.&rdquo;</p>
+</blockquote>
+<p>I found that the top left corner (marked below) was the easiest to open when I applied a little force with my fingers (not nails—do not stick your nails between the screen and the cover). If you use a tight case with your e-reader, there is always one corner that takes more pressure than the others when you remove it. Without exaggerating, apply a bit of force to the thin corners and see if they yield a little space.</p>
+<p>I do not recommend starting from the more rounded corners on the button side. Specifically, on the top-right, there is a screen connector and even more sticky adhesive above it. Also, <strong>please do not take the chance of sticking anything sharp into the top-right corner; do not risk tearing that screen connector.</strong> (Fixing and soldering a torn ribbon cable is extremely difficult and requires too much attention, patience, time, and specialized equipment).</p>
+<p>I did not apply any heat during the opening process. Without prior knowledge of the internal component placement, and considering the back cover plastic appeared highly susceptible to thermal deformation, using a heat gun did not seem like a viable approach. I managed to pry it open without thermal assistance; however, if you are proficient with a heat gun and trust your thermal management after analyzing the internal layout provided later in this documentation, you may proceed with heat application at your own discretion.</p>
+<p><img alt="Where I started opening the cover" loading="lazy" src="/posts/repairing_kobo_sage/assets/image-1.png"></p>
+<p>After getting a small opening in one corner, you will need a prying tool that is <strong>flexible</strong>, <strong>blunt</strong>, and <strong>thin</strong>. I used a couple of plastic picks. The adhesive goo is not on the vertical sides; it is attached where the back cover meets the internal chassis, parallel to the surface.</p>
+<p>Keeping this in mind, you have to use very gentle prying force and a lot of patience.</p>
+<p>If you manage to get the back cover off without any serious damage, you will notice the power button has a separate PCB. It connects to the motherboard via a long ribbon cable and is attached to the back cover by two small screws. Removing and reinstalling them can be tricky given the tight space, but it is doable.</p>
+<h2 id="what-it-looks-like-on-the-inside">What it looks like on the inside<a hidden class="anchor" aria-hidden="true" href="#what-it-looks-like-on-the-inside">#</a></h2>
+<p>At first glance, after all that effort, a couple of things are worth noticing:</p>
+<ul>
+<li>
+<p>The battery cables are directly soldered to the motherboard, and the solder points have a small transparent protector over them.</p>
+</li>
+<li>
+<p>It’s no wonder the power button felt weird before; it looks even more ridiculous when you see the actual switch mechanism they opted for.</p>
+</li>
+<li>
+<p>The battery takes up a lot of space, but don&rsquo;t be fooled by its footprint; it is EXTREMELY THIN. If you want a perfect OEM-style solution, you can try to buy a battery with the exact dimensions (which will be very hard to find, mind you). But if you are just repairing it for functionality, there are other batteries that, while not a perfect fit size-wise, won&rsquo;t prevent the back cover from closing properly.</p>
+</li>
+<li>
+<p>If you are having issues with the page-turn buttons, you will have to remove the motherboard by taking out six more screws to check behind it.</p>
+</li>
+</ul>
+<p>Here is a sneak peek of the internals. Take a look at the image below.</p>
+<p><img alt="Internal look" loading="lazy" src="/posts/repairing_kobo_sage/assets/image-2.png"></p>
+<h2 id="measurements">Measurements<a hidden class="anchor" aria-hidden="true" href="#measurements">#</a></h2>
+<p>I scraped off a little of the protective glue on the battery solder points to get a decent reading and placed my multimeter probes. While the device was frozen or just sitting idle, I measured 4V. However, when I pressed the power button while monitoring the values, the voltage suddenly dropped to 3.4-3.5V. This voltage sag was the reason the PMIC kept locking out my device; it was registering values below the expected operating voltage under load.</p>
+<p><img alt="Measuring voltage" loading="lazy" src="/posts/repairing_kobo_sage/assets/image-3.png"></p>
+<h2 id="the-fix">The Fix<a hidden class="anchor" aria-hidden="true" href="#the-fix">#</a></h2>
+<p>Any 3.7V Li-ion battery with 1200mAh (4.44 / 3.7 = 1.2Ah) that is thin enough will get the job done. It doesn&rsquo;t have to fit perfectly; the back cover is plastic and can flex slightly, so it will close just fine even if the battery isn&rsquo;t an exact match in size.</p>
+<p>Keep in mind that most aftermarket batteries come with a standard JST connector. The Kobo Sage motherboard does not have a connector socket; the power lines are directly soldered. You cannot just plug it in. You will need to remove this connector and solder the wires yourself.</p>
+<p><strong>CRITICAL WARNING:</strong> When removing the JST connector, cut the wires ONE BY ONE. If your wire cutters slice through both the red (VCC) and black (GND) wires simultaneously, you will short the battery and create a fire hazard.</p>
+<p><img alt="Equivalent placeholder Li-ion battery example " loading="lazy" src="/posts/repairing_kobo_sage/assets/image-4.png"></p>
+<h2 id="the-cost">The Cost<a hidden class="anchor" aria-hidden="true" href="#the-cost">#</a></h2>
+<p>I originally purchased this device two years ago for roughly $246. Today, the current market price for the exact same unit has escalated to an absurd $565. On top of that, accessories like a proper cover and the Stylus 2 add another $109 to your total ecosystem cost.</p>
+<p>I contacted an authorized service center to get a baseline repair quote. They demanded $100 for the fix. This requested amount was more than a third of my initial purchase price for the entire device. Since buying a brand new one (only to not read pdfs I saw here and there) was already out of the question, accepting this service quote was mathematically and logically unacceptable to me.</p>
+<p><strong>Ultimately, disregarding the time and effort spent on the hardware, I just sourced a replacement battery for $10 (450 TRY). The absolute financial cost of this entire repair operation was exactly $10.</strong></p>
+<p>Odds were on my side for this one (yay!), hopefully see you on the next repair.</p>
+<p><img loading="lazy" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW8yMDhvM3pzY2U4ajlvcXUwb3VudHNuM3NsZnk2bjdtZ3p2enFrbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/f74WDV59cP0NArh8gu/giphy.gif"></p>
+<hr>
+<p>A final note: if you end up with an irreparable device but the E-INK screen is still healthy, please do not throw it away. E-INK panels are incredibly expensive, especially at these sizes. If you cannot repair what you have, I strongly encourage you to salvage its usable parts properly.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/kobo-sage/">Kobo Sage</a></li>
+      <li><a href="http://localhost:1313/tags/li-po-battery/">Li-Po Battery</a></li>
+      <li><a href="http://localhost:1313/tags/uvlo/">UVLO</a></li>
+      <li><a href="http://localhost:1313/tags/soldering/">Soldering</a></li>
+      <li><a href="http://localhost:1313/tags/right-to-repair/">Right to Repair</a></li>
+      <li><a href="http://localhost:1313/tags/hardware-teardown/">Hardware Teardown</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/posts/windows_setup_on_external_disk/">
+    <span class="title">Next »</span>
+    <span>Windows 10 on External USB SSD: The Correct Manual Way</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">Forgotten and Rarely Remembered Blog</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    mediumZoom('.post-content img', {
+      margin: 24,
+      background: '#1d1e22',
+      scrollOffset: 40
+    });
+  });
+</script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightElement(block);
+    });
+  });
+</script>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

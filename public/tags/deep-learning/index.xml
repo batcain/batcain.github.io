@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Deep Learning on Forgotten and Rarely Remembered Blog</title>
+    <link>http://localhost:1313/tags/deep-learning/</link>
+    <description>Recent content in Deep Learning on Forgotten and Rarely Remembered Blog</description>
+    <image>
+      <title>Forgotten and Rarely Remembered Blog</title>
+      <url>http://localhost:1313/images/papermod-cover.png</url>
+      <link>http://localhost:1313/images/papermod-cover.png</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 01 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mitigating Mode Collapse via Negative Contrastive Memory and Self-Supervised Constraints in GANs</title>
+      <link>http://localhost:1313/posts/s2c2-gan/</link>
+      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/s2c2-gan/</guid>
+      <description>Testing out GAN&amp;rsquo;s with different additional features</description>
+    </item>
+  </channel>
+</rss>
