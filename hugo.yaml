@@ -43,7 +43,6 @@ params:
     imageWidth: 120
     imageHeight: 120
     text: ""
-  # Sosyal Medya ve Hesap Linkleri
   
   socialIcons:
     - name: "github"
@@ -53,13 +52,11 @@ params:
     - name: "virustotal"
       url: "https://www.virustotal.com/gui/user/batcain"
 
-  # Footer Ayarları
   label:
     text: "~/"
     icon: ""
     iconHeight: 35
 
-# Üst Menü Yapılandırması (About, Posts, Series vb.)
 menu:
   main:
     - identifier: "posts"
